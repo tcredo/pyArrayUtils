@@ -20,7 +20,7 @@ def findExampleIndicesShort(array):
   maxValue = array.max() + 1
   indices = {}
   for i, index in enumerate(indices1Dshort(flattenedArray, maxValue)):
-    if index > 0:
+    if index >= 0:
       indices[i] = unflattenIndex(index, array.shape)
   return indices
 
@@ -38,6 +38,7 @@ def unflattenIndex(index, shape):
 
 def test():
   result = findExampleIndicesShort(numpy.array([10000*[i] for i in range(10000)]))
+  assert len(result)==10000 # Check that we have all the items.
   for k, index in result.items():
     assert index[0]==k # Check that the row is correct.
     assert index[1]==0 # Check that we take the first value in the row.
