@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <math.h>
 #include <Python.h>
 #include <arrayobject.h>
 
