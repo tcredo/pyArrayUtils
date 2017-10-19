@@ -16,8 +16,7 @@ static PyObject* indices1D(PyObject *self, PyObject *args) {
   }
   indexDictionary = PyDict_New();
   int size = imageDataArray->dimensions[0];
-  int i = 0;
-  for (; i<size; i++) {
+  for (int i=0; i<size; i++) {
     int arrayItem = *(int *) PyArray_GETPTR1(imageDataArray, i);
     PyObject *pyArrayItem = PyLong_FromLong(arrayItem);
     if (!PyDict_Contains(indexDictionary, pyArrayItem)) {
@@ -52,8 +51,7 @@ static PyObject* indices1Dshort(PyObject *self, PyObject *args) {
   indexMap = (PyArrayObject *) PyArray_FromDims(1, dim, PyArray_INT);
   PyArray_FILLWBYTE(indexMap, -1);
   int size = imageDataArray->dimensions[0];
-  int i = 0;
-  for (; i<size; i++) {
+  for (int i=0; i<size; i++) {
     unsigned short arrayItem = *(unsigned short *) PyArray_GETPTR1(imageDataArray, i);
     if (arrayItem < maxValue) {
       int *mapIndex = (int *) PyArray_GETPTR1(indexMap, arrayItem);
