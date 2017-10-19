@@ -31,7 +31,7 @@ def unflattenIndex(index, shape):
   indices = []
   i = index
   for d in shape[::-1]:
-    i, remainder = i/d, i%d
+    i, remainder = i//d, i%d
     indices.append(remainder)
   assert i==0
   return indices[::-1]

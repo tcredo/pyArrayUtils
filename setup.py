@@ -1,7 +1,7 @@
 from distutils.core import setup, Extension
 import os
 
-NUMPY_INCLUDE_PATH = '/usr/lib/python2.7/dist-packages/numpy/core/include/numpy/'
+NUMPY_INCLUDE_PATH = '/usr/lib/python3/dist-packages/numpy/core/include/numpy/'
 
 pyArrayUtils = Extension('pyArrayUtils.exampleIndices',
                          sources = ['lib/exampleIndices.c'],

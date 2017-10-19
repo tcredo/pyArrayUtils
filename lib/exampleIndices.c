@@ -17,14 +17,14 @@ static PyObject* indices1D(PyObject *self, PyObject *args) {
   indexDictionary = PyDict_New();
   int size = imageDataArray->dimensions[0];
   int i = 0;
-  for (i; i<size; i++) {
+  for (; i<size; i++) {
     int arrayItem = *(int *) PyArray_GETPTR1(imageDataArray, i);
-    PyObject *pyArrayItem = PyInt_FromLong(arrayItem);
+    PyObject *pyArrayItem = PyLong_FromLong(arrayItem);
     if (!PyDict_Contains(indexDictionary, pyArrayItem)) {
       // Insert the item in the dictionary.
       // PyDict_SetItem is responsible for maintaining its own references,
       // so we'll need to call Py_DECREF on the keys and values.
-      PyObject *index = PyInt_FromLong(i);
+      PyObject *index = PyLong_FromLong(i);
       PyDict_SetItem(indexDictionary, pyArrayItem, index);
       Py_DECREF(index);
     }
@@ -53,7 +53,7 @@ static PyObject* indices1Dshort(PyObject *self, PyObject *args) {
   PyArray_FILLWBYTE(indexMap, -1);
   int size = imageDataArray->dimensions[0];
   int i = 0;
-  for (i; i<size; i++) {
+  for (; i<size; i++) {
     unsigned short arrayItem = *(unsigned short *) PyArray_GETPTR1(imageDataArray, i);
     if (arrayItem < maxValue) {
       int *mapIndex = (int *) PyArray_GETPTR1(indexMap, arrayItem);
@@ -71,8 +71,15 @@ static PyMethodDef ExtMethods[] = {
   {NULL,NULL,0,NULL}
 };
 
-PyMODINIT_FUNC initexampleIndices(void) {
-  (void) Py_InitModule("exampleIndices", ExtMethods);
+static struct PyModuleDef exampleIndicesModule = {
+  PyModuleDef_HEAD_INIT, "exampleIndices", NULL, -1, ExtMethods, NULL, NULL, NULL, NULL
+};
+
+PyMODINIT_FUNC PyInit_exampleIndices(void) {
+  PyObject *module;
+  module = PyModule_Create(&exampleIndicesModule);
+  if (!module) return NULL;
   import_array();
+  return module;
 }
 
